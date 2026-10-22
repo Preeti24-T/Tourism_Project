@@ -2,14 +2,11 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-# Project paths: use __file__ if running as a script, fallback to Path.cwd() in a notebook
-try:
-    ROOT_DIR = Path(__file__).resolve().parents[1]
-except NameError:
-    ROOT_DIR = Path.cwd() / "tourism_project"
-
+# Resolve paths relative to this script so it works in GitHub Actions and locally
+ROOT_DIR = Path(__file__).resolve().parent
 DATA_PATH = ROOT_DIR / "data" / "tourism.csv"
 OUTPUT_DIR = ROOT_DIR / "data" / "processed"
+
 
 def main():
     # 1. Load data directly from the repository
@@ -74,6 +71,7 @@ def main():
     print(train_df[target].value_counts(normalize=True).round(3))
     print("\nTesting target distribution:")
     print(test_df[target].value_counts(normalize=True).round(3))
+
 
 if __name__ == "__main__":
     main()
