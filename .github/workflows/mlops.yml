@@ -25,16 +25,15 @@ jobs:
         run: python data_register.py
 
       - name: Prepare data
-        run: python data_prep.py
+        run: python prep.py
 
-      # Upload train.csv and test.csv
       - name: Upload prepared data
         uses: actions/upload-artifact@v4
         with:
           name: prepared-data
           path: |
-            tourism_project/data/processed/train.csv
-            tourism_project/data/processed/test.csv
+            data/processed/train.csv
+            data/processed/test.csv
           if-no-files-found: error
 
   model-training:
@@ -50,16 +49,14 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Download the artifact created by the first job
       - name: Download prepared data
         uses: actions/download-artifact@v4
         with:
           name: prepared-data
-          path: tourism_project/data/processed
+          path: data/processed
 
-      # Confirm the files are available
       - name: Verify downloaded files
         run: |
-          ls -l tourism_project/data/processed
-          python -c "import pandas as pd; print('Train shape:', pd.read_csv('tourism_project/data/processed/train.csv').shape)"
-          python -c "import pandas as pd; print('Test shape:', pd.read_csv('tourism_project/data/processed/test.csv').shape)"
+          ls -l data/processed
+          python -c "import pandas as pd; print('Train shape:', pd.read_csv('data/processed/train.csv').shape)"
+          python -c "import pandas as pd; print('Test shape:', pd.read_csv('data/processed/test.csv').shape)"
