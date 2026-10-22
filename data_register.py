@@ -2,11 +2,9 @@ from pathlib import Path
 import pandas as pd
 import sys
 
-# Resolve paths relative to this file so the script works from any working directory
 ROOT_DIR = Path(__file__).resolve().parent
 DATA_PATH = ROOT_DIR / "data" / "tourism.csv"
 
-# Expected dataset columns
 EXPECTED_COLUMNS = [
     "CustomerID", "ProdTaken", "Age", "TypeofContact",
     "CityTier", "DurationOfPitch", "Occupation", "Gender",
@@ -17,7 +15,6 @@ EXPECTED_COLUMNS = [
     "MonthlyIncome"
 ]
 
-
 def main():
     if not DATA_PATH.exists():
         sys.exit(f"ERROR: Dataset not found: {DATA_PATH}")
@@ -27,9 +24,7 @@ def main():
     missing_columns = set(EXPECTED_COLUMNS) - set(df.columns)
 
     if missing_columns:
-        sys.exit(
-            f"ERROR: Missing expected columns: {sorted(missing_columns)}"
-        )
+        sys.exit(f"ERROR: Missing expected columns: {sorted(missing_columns)}")
 
     if df.empty:
         sys.exit("ERROR: Dataset is empty.")
@@ -41,7 +36,6 @@ def main():
     print(f"Missing values: {df.isna().sum().sum()}")
     print(f"Duplicate rows: {df.duplicated().sum()}")
     print("All expected columns are present.")
-
 
 if __name__ == "__main__":
     main()
