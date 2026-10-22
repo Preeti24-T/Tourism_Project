@@ -2,8 +2,8 @@ from pathlib import Path
 import pandas as pd
 import sys
 
-# Locate the dataset inside the repository relative to current working directory
-ROOT_DIR = Path.cwd() / "tourism_project"
+# Resolve paths relative to this file so the script works from any working directory
+ROOT_DIR = Path(__file__).resolve().parent
 DATA_PATH = ROOT_DIR / "data" / "tourism.csv"
 
 # Expected dataset columns
@@ -16,6 +16,7 @@ EXPECTED_COLUMNS = [
     "OwnCar", "NumberOfChildrenVisiting", "Designation",
     "MonthlyIncome"
 ]
+
 
 def main():
     if not DATA_PATH.exists():
@@ -40,6 +41,7 @@ def main():
     print(f"Missing values: {df.isna().sum().sum()}")
     print(f"Duplicate rows: {df.duplicated().sum()}")
     print("All expected columns are present.")
+
 
 if __name__ == "__main__":
     main()
