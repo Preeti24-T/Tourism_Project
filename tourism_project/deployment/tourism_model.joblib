@@ -1,0 +1,6 @@
+import joblib
+
+joblib.dump(
+    best_model,
+    "tourism_project/deployment/tourism_model.joblib"
+)
